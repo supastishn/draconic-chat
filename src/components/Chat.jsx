@@ -46,18 +46,34 @@ function Chat({ user, onLogout }) {
     e.preventDefault();
     if (!newMessage.trim()) return;
 
+    const tempId = `temp-${Date.now()}-${Math.random()}`; // Create a unique temporary ID
+    const messageText = newMessage;
+
+    // Optimistically add the message to the state
+    const tempMessage = {
+      $id: tempId, // Use temporary ID for key
+      text: messageText,
+      $createdAt: new Date().toISOString(), // Use current time as placeholder
+      $permissions: [`update("user:${user.$id}")`], // Assume current user is owner for display
+      isPending: true, // Flag to indicate it's a pending message
+    };
+
+    setMessages((prevMessages) => [...prevMessages, tempMessage]);
+    setNewMessage(''); // Clear input immediately
+
     try {
       // Create document with user ID, user name, and permissions
-      await databases.createDocument(
+      const realMessage = await databases.createDocument(
         DATABASE_ID,
         COLLECTION_ID_MESSAGES,
         ID.unique(),
-        { text: newMessage },
+        { text: messageText },
         // Set document permissions: read for any, update for the owner
         // The `update("user:${user.$id}")` permission implicitly links the message to the user.
         [`read("any")`, `update("user:${user.$id}")`]
       );
-      setNewMessage('');
+      // Replace the temporary message with the real one from Appwrite
+      setMessages((prevMessages) => prevMessages.map(msg => msg.$id === tempId ? realMessage : msg));
     } catch (error) {
       console.error("Failed to send message:", error);
     }
@@ -69,7 +85,7 @@ function Chat({ user, onLogout }) {
       <button onClick={onLogout} style={{ position: 'absolute', top: '1em', right: '1em' }}>Logout</button> {/* Basic logout button */}
       <div className="messages-container">
         {messages.map((message) => {
-          let ownerDisplay = "Unknown Owner";
+          let ownerDisplay = message.isPending ? (user.name || user.email || "You") : "Unknown Owner"; // Display current user for pending messages
           // Find the update permission to identify the owner
           const updatePermission = message.$permissions.find(p => p.startsWith('update("user:'));
           if (updatePermission) {
@@ -82,7 +98,7 @@ function Chat({ user, onLogout }) {
           }
           return (
             <div key={message.$id} className="message">
-              <p className="message-owner">{ownerDisplay}:</p>
+              <p className="message-owner">{ownerDisplay}{message.isPending ? ' (sending...)' : ''}:</p> {/* Add pending indicator */}
               <p>{message.text}</p>
               <small className="message-timestamp">{new Date(message.$createdAt).toLocaleTimeString()}</small>
             </div>
