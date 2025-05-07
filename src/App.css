@@ -1,8 +1,11 @@
 #root {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 1rem;
-  text-align: left;
+  /* Centering the app-container within the root */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  min-height: 100vh; /* Ensure root takes full viewport height */
+  width: 100%; /* Allow root to take full width */
+  padding: 0; /* Remove padding from root to allow container to be centered */
 }
 
 .app-container {
@@ -13,6 +16,7 @@
   border: 1px solid #444;
   border-radius: 8px;
   overflow: hidden;
+  text-align: left; /* Keep text alignment within the container */
   background-color: #2f2f2f;
 }
 
