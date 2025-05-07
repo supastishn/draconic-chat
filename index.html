@@ -8,6 +8,15 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- Add eruda console in development -->
+    <script type="module">
+      if (import.meta.env.DEV) {
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/eruda@3.0.1/eruda.js'; // Using unpkg CDN
+        script.onload = () => eruda.init();
+        document.body.appendChild(script);
+      }
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
