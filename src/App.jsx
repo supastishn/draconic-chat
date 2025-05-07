@@ -46,6 +46,7 @@ function App() {
       ) : (
         <Auth onLogin={() => account.get().then(setCurrentUser)} />
       )}
+    </div>
   )
 }
 
