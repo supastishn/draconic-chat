@@ -1,12 +1,12 @@
-# React + Vite
+# Draconic Chatroom (React + Vite + Appwrite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a basic chatroom application built with React, Vite, and Appwrite for real-time messaging.
 
-Currently, two official plugins are available:
+## Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1.  Ensure you have Node.js and npm installed.
+2.  Set up your Appwrite backend (Project, Database, Collection, Attributes, Permissions) as described in the main guide.
+3.  Update `src/appwrite.js` with your Appwrite endpoint.
+4.  Update `src/App.jsx` with your Database ID and Collection ID.
+5.  Install dependencies: `npm install`
+6.  Run the development server: `npm run dev`
