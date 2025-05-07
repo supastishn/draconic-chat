@@ -52,12 +52,9 @@ function Chat({ user, onLogout }) {
         DATABASE_ID,
         COLLECTION_ID_MESSAGES,
         ID.unique(),
-        {
-          text: newMessage,
-          userId: user.$id,
-          userName: user.name || user.email, // Use name if available, otherwise email
-        },
+        { text: newMessage },
         // Set document permissions: read for any, update for the owner
+        // The `update("user:${user.$id}")` permission implicitly links the message to the user.
         [`read("any")`, `update("user:${user.$id}")`]
       );
       setNewMessage('');
@@ -67,17 +64,30 @@ function Chat({ user, onLogout }) {
   };
 
   return (
-    <> {/* Use a fragment as App.jsx already provides the app-container div */}
+    <>
       <h1>Draconic Chatroom</h1>
       <button onClick={onLogout} style={{ position: 'absolute', top: '1em', right: '1em' }}>Logout</button> {/* Basic logout button */}
       <div className="messages-container">
-        {messages.map((message) => (
-          <div key={message.$id} className="message">
-            <p className="message-owner">{message.userName}:</p> {/* Display owner's name */}
-            <p>{message.text}</p>
-            <small className="message-timestamp">{new Date(message.$createdAt).toLocaleTimeString()}</small>
-          </div>
-        ))}
+        {messages.map((message) => {
+          let ownerDisplay = "Unknown Owner";
+          // Find the update permission to identify the owner
+          const updatePermission = message.$permissions.find(p => p.startsWith('update("user:'));
+          if (updatePermission) {
+            const ownerId = updatePermission.substring('update("user:'.length, updatePermission.length - 2);
+            if (ownerId === user.$id) {
+              ownerDisplay = user.name || user.email || "You"; // Current user's display name
+            } else {
+              ownerDisplay = `User ID: ${ownerId}`; // Display other users' IDs
+            }
+          }
+          return (
+            <div key={message.$id} className="message">
+              <p className="message-owner">{ownerDisplay}:</p>
+              <p>{message.text}</p>
+              <small className="message-timestamp">{new Date(message.$createdAt).toLocaleTimeString()}</small>
+            </div>
+          );
+        })}
       </div>
       <form onSubmit={handleSendMessage} className="message-form">
         {/* Input and button are already in App.jsx, move them here */}
@@ -89,4 +99,3 @@ function Chat({ user, onLogout }) {
 }
 
 export default Chat;
-

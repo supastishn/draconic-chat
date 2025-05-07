@@ -8,7 +8,7 @@ This is a basic chatroom application built with React, Vite, and Appwrite for re
 2.  Set up your Appwrite backend (Project, Database, Collection, Attributes, Permissions).
     *   Create a Database (e.g., `database`).
     *   Create a Collection (e.g., `messages`) within the database.
-    *   Add attributes to the `messages` collection: `text` (String, required), `userId` (String, required), `userName` (String, required).
+    *   Add attributes to the `messages` collection: `text` (String, required). The owner of the message will be determined by document permissions.
     *   Enable Document Security on the `messages` collection.
     *   Set Collection Permissions for `messages`: `read("any")`, `create("users")`. Document-level permissions for update will be set when creating messages.
 3.  Update `src/appwrite.js` with your Appwrite endpoint.
