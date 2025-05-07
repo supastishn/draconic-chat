@@ -1,4 +1,4 @@
-import { Client, Databases, ID, Query, Realtime } from 'appwrite';
+import { Client, Databases, ID, Query } from 'appwrite';
 
 const client = new Client();
 
@@ -10,4 +10,4 @@ const databases = new Databases(client);
 
 // Export Realtime separately if you need to instantiate it with the client elsewhere,
 // or handle subscriptions directly via client.subscribe
-export { client, databases, ID, Query, Realtime };
+export { client, databases, ID, Query };
