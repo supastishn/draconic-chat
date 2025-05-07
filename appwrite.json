@@ -28,7 +28,8 @@
             "indexes": [],
             "enabled": true,
             "permissions": [
-                "read(\"any\")", "create(\"any\")"
+                "read(\"any\")",
+                "create(\"any\")"
             ]
         }
     ]
