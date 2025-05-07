@@ -8,8 +8,8 @@
 .app-container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 4rem); /* Adjust based on padding/margin of #root or body */
-  max-height: 700px; /* Optional max height */
+  height: 80vh;
+  width: 80vw;
   border: 1px solid #444;
   border-radius: 8px;
   overflow: hidden;
