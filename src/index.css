@@ -61,7 +61,6 @@ button:focus-visible {
     background-color: #ffffff;
   }
   #root {
-    /* Ensure centering works in light mode too */
     color: #213547;
   }
   a:hover {
