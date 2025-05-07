@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
-import { client, databases, ID, Query } from './appwrite';
+import { account } from './appwrite';
 import './App.css'
+import Auth from './components/Auth';
+import Chat from './components/Chat';
 
 // --- Appwrite Configuration ---
 // IMPORTANT: Ensure these match your Appwrite setup (appwrite.json)
@@ -10,73 +12,40 @@ const COLLECTION_ID_MESSAGES = 'messages'; // Matches appwrite.json collection $
 // And appropriate permissions (e.g., 'Any' or 'Users' can Create and Read documents).
 // Also, ensure YOUR_APPWRITE_ENDPOINT is set in src/appwrite.js
 
+// Pass these IDs down to components that need them
+export { DATABASE_ID, COLLECTION_ID_MESSAGES };
+
 function App() {
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Fetch initial messages
+  // Check for active session on mount
   useEffect(() => {
-    const getMessages = async () => {
+    const checkUser = async () => {
       try {
-        const response = await databases.listDocuments(
-          DATABASE_ID,
-          COLLECTION_ID_MESSAGES,
-          [Query.orderDesc('$createdAt'), Query.limit(50)] // Fetch latest 50, newest first
-        );
-        setMessages(response.documents.reverse()); // Reverse to show oldest first in UI
+        const user = await account.get();
+        setCurrentUser(user);
       } catch (error) {
-        console.error("Failed to fetch messages:", error);
+        // No active session
+        setCurrentUser(null);
+      } finally {
+        setLoading(false);
       }
     };
-    getMessages();
+    checkUser();
   }, []);
 
-  // Subscribe to new messages
-  useEffect(() => {
-    // Realtime subscription path uses the actual IDs
-
-    const unsubscribe = client.subscribe(
-      `databases.${DATABASE_ID}.collections.${COLLECTION_ID_MESSAGES}.documents`,
-      (response) => {
-        if (response.events.includes('databases.*.collections.*.documents.*.create')) {
-          setMessages((prevMessages) => [...prevMessages, response.payload]);
-        }
-      }
-    );
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
-  const handleSendMessage = async (e) => {
-    e.preventDefault();
-    if (!newMessage.trim()) return;
-    try {
-      await databases.createDocument(
-        DATABASE_ID,
-        COLLECTION_ID_MESSAGES,
-        ID.unique(),
-        { text: newMessage } // Ensure 'text' attribute exists in your collection
-      );
-      setNewMessage('');
-    } catch (error) {
-      console.error("Failed to send message:", error);
-    }
-  };
+  if (loading) {
+    return <div className="app-container">Loading...</div>; // Or a spinner
+  }
 
   return (
     <div className="app-container">
-      <h1>Draconic Chatroom</h1>
-      <div className="messages-container">
-        {messages.map((message) => (
-          <div key={message.$id} className="message">
-            <p>{message.text}</p>
-            <small className="message-timestamp">{new Date(message.$createdAt).toLocaleTimeString()}</small>
-          </div>
-        ))}
-      </div>
-      <form onSubmit={handleSendMessage} className="message-form">
+      {currentUser ? (
+        <Chat user={currentUser} onLogout={() => setCurrentUser(null)} />
+      ) : (
+        <Auth onLogin={() => account.get().then(setCurrentUser)} />
+      )}
         <input
           type="text"
           value={newMessage}
@@ -86,7 +55,6 @@ function App() {
         />
         <button type="submit">Send</button>
       </form>
-    </div>
   )
 }
 

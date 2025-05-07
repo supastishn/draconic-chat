@@ -13,6 +13,7 @@
             "databaseId": "database",
             "name": "messages",
             "documentSecurity": false,
+            "documentSecurity": true,
             "attributes": [
                 {
                     "$id": "text",
@@ -20,6 +21,25 @@
                     "type": "string",
                     "size": 65535,
                     "required": true,
+                    "signed": false,
+                    "array": false,
+                    "filters": []
+                },
+                {
+                    "$id": "userId",
+                    "key": "userId",
+                    "type": "string",
+                    "size": 255,
+                    "required": true,
+                    "signed": false,
+                    "array": false,
+                    "filters": []
+                },
+                {
+                    "$id": "userName",
+                    "key": "userName",
+                    "type": "string",
+                    "size": 255,
                     "signed": true,
                     "array": false,
                     "filters": []
@@ -28,8 +48,7 @@
             "indexes": [],
             "enabled": true,
             "$permissions": [
-                "read(\"any\")",
-                "create(\"any\")"
+                "read(\"any\")", "create(\"users\")"
             ]
         }
     ]

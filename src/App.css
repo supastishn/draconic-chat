@@ -17,6 +17,7 @@
   border-radius: 8px;
   overflow: hidden;
   text-align: left; /* Keep text alignment within the container */
+  color: rgba(255, 255, 255, 0.87); /* Default text color */
   background-color: #2f2f2f;
 }
 
@@ -46,10 +47,15 @@ h1 { /* This h1 is inside .app-container now */
   word-wrap: break-word;
   background-color: #3a3a3c; /* Darker message bubble for dark theme */
   color: #f0f0f0;
-  align-self: flex-start; /* Example: all messages align left */
+  align-self: flex-start;
 }
 
 .message p {
+  margin: 0 0 0.25em 0;
+}
+
+.message-owner {
+  font-weight: bold;
   margin: 0 0 0.25em 0;
 }
 
@@ -80,4 +86,36 @@ h1 { /* This h1 is inside .app-container now */
 /* Button styles will be inherited from index.css or can be customized here */
 .message-form button {
   padding: 0.8em 1.5em;
+}
+
+/* Styles for Auth component */
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+  gap: 1.5em;
+  width: 100%; /* Take full width of app-container */
+  height: 100%; /* Take full height of app-container */
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 100%;
+  max-width: 300px; /* Limit form width */
+}
+
+.auth-form input {
+  padding: 0.8em;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #333;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.auth-form button {
+  width: 100%;
 }
