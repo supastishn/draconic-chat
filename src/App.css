@@ -88,6 +88,7 @@ h1 { /* This h1 is inside .app-container now */
 /* Button styles will be inherited from index.css or can be customized here */
 .message-form button {
   padding: 0.8em 1.5em;
+  color: #ffffff; /* Make send button text white */
 }
 
 /* Styles for Auth component */
