@@ -3,9 +3,9 @@ import { client, databases, ID, Query } from './appwrite';
 import './App.css'
 
 // --- Appwrite Configuration ---
-// IMPORTANT: Replace these with your actual Database ID and Collection ID from Appwrite!
-const DATABASE_ID = 'YOUR_DATABASE_ID';
-const COLLECTION_ID_MESSAGES = 'YOUR_COLLECTION_ID_MESSAGES';
+// IMPORTANT: Ensure these match your Appwrite setup (appwrite.json)
+const DATABASE_ID = 'database'; // Matches appwrite.json database $id
+const COLLECTION_ID_MESSAGES = 'messages'; // Matches appwrite.json collection $id
 // Ensure your Appwrite collection has an attribute 'text' (String) for message content.
 // And appropriate permissions (e.g., 'Any' or 'Users' can Create and Read documents).
 // Also, ensure YOUR_APPWRITE_ENDPOINT is set in src/appwrite.js
@@ -28,17 +28,12 @@ function App() {
         console.error("Failed to fetch messages:", error);
       }
     };
-    if (DATABASE_ID !== 'YOUR_DATABASE_ID' && COLLECTION_ID_MESSAGES !== 'YOUR_COLLECTION_ID_MESSAGES') {
-      getMessages();
-    }
+    getMessages();
   }, []);
 
   // Subscribe to new messages
   useEffect(() => {
-    if (DATABASE_ID === 'YOUR_DATABASE_ID' || COLLECTION_ID_MESSAGES === 'YOUR_COLLECTION_ID_MESSAGES') {
-      console.warn("Appwrite Database/Collection IDs not set. Realtime subscription disabled.");
-      return;
-    }
+    // Realtime subscription path uses the actual IDs
 
     const unsubscribe = client.subscribe(
       `databases.${DATABASE_ID}.collections.${COLLECTION_ID_MESSAGES}.documents`,

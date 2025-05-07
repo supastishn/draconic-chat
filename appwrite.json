@@ -12,10 +12,24 @@
             "$id": "messages",
             "databaseId": "database",
             "name": "messages",
-            "documentSecurity": true,
-            "attributes": [],
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "$id": "text",
+                    "key": "text",
+                    "type": "string",
+                    "size": 65535,
+                    "required": true,
+                    "signed": true,
+                    "array": false,
+                    "filters": []
+                }
+            ],
             "indexes": [],
-            "enabled": true
+            "enabled": true,
+            "permissions": [
+                "read(\"any\")", "create(\"any\")"
+            ]
         }
     ]
 }
