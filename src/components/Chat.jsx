@@ -6,41 +6,65 @@ function Chat({ user, onLogout }) {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
 
-  // Fetch initial messages
+  // Fetch initial messages and set up polling
   useEffect(() => {
     const getMessages = async () => {
       try {
         const response = await databases.listDocuments(
           DATABASE_ID,
           COLLECTION_ID_MESSAGES,
-          [Query.orderDesc('$createdAt'), Query.limit(50)] // Fetch latest 50, newest first
+          [Query.orderDesc('$createdAt'), Query.limit(50)] // Fetch latest 50
         );
         setMessages(response.documents.reverse()); // Reverse to show oldest first in UI
       } catch (error) {
         console.error("Failed to fetch messages:", error);
       }
     };
+
+    // Initial fetch
     getMessages();
+
+    // Set up polling interval
+    const pollingInterval = setInterval(async () => {
+        console.log("Polling for new messages...");
+        try {
+            const response = await databases.listDocuments(
+                DATABASE_ID,
+                COLLECTION_ID_MESSAGES,
+                [Query.orderDesc('$createdAt'), Query.limit(50)] // Fetch latest 50
+            );
+            const polledMessages = response.documents.reverse(); // Reverse to show oldest first
+
+            setMessages(currentMessages => {
+                // Create a map of existing messages by ID (including temporary ones)
+                const existingMessageIds = new Set(currentMessages.map(msg => msg.$id));
+
+                // Filter polled messages to find new ones
+                const newMessages = polledMessages.filter(polledMsg => !existingMessageIds.has(polledMsg.$id));
+
+                // Merge new messages with existing ones
+                const mergedMessages = [...currentMessages, ...newMessages];
+
+                // Sort by creation time to maintain order
+                mergedMessages.sort((a, b) => new Date(a.$createdAt) - new Date(b.$createdAt));
+
+                return mergedMessages;
+            });
+
+        } catch (error) {
+            console.error("Failed to poll for messages:", error);
+        }
+    }, 5000); // Poll every 5 seconds
+
+    // Cleanup function to clear the interval
+    return () => clearInterval(pollingInterval);
+
   }, []);
 
-  // Subscribe to new messages
-  useEffect(() => {
-    // Realtime subscription path uses the actual IDs
-    const unsubscribe = client.subscribe(
-      `databases.${DATABASE_ID}.collections.${COLLECTION_ID_MESSAGES}.documents`,
-      (response) => {
-        // Only add if it's a create event and the document doesn't already exist (to avoid duplicates from initial fetch)
-        if (response.events.includes('databases.*.collections.*.documents.*.create') &&
-            !messages.some(msg => msg.$id === response.payload.$id)) {
-          setMessages((prevMessages) => [...prevMessages, response.payload]);
-        }
-      }
-    );
-
-    return () => {
-      unsubscribe();
-    };
-  }, [messages]); // Add messages as dependency to check for duplicates
+  // Note: The subscription useEffect has been removed and replaced by polling.
+  // The optimistic update logic in handleSendMessage remains, ensuring immediate feedback.
+  // The polling mechanism will fetch messages from other users and eventually confirm
+  // the current user's messages if the optimistic update succeeds.
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -76,6 +100,8 @@ function Chat({ user, onLogout }) {
       setMessages((prevMessages) => prevMessages.map(msg => msg.$id === tempId ? realMessage : msg));
     } catch (error) {
       console.error("Failed to send message:", error);
+      // Remove the temporary message on failure
+      setMessages((prevMessages) => prevMessages.filter(msg => msg.$id !== tempId));
     }
   };
 
