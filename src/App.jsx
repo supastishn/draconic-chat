@@ -46,14 +46,6 @@ function App() {
       ) : (
         <Auth onLogin={() => account.get().then(setCurrentUser)} />
       )}
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type a message..."
-          aria-label="Type a message"
-        />
-        <button type="submit">Send</button>
       </form>
   )
 }
