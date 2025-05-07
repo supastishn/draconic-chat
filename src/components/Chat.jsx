@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { client, databases, ID, Query } from '../appwrite';
 import { DATABASE_ID, COLLECTION_ID_MESSAGES } from '../App'; // Import IDs from App.jsx
 
 function Chat({ user, onLogout }) {
   const [messages, setMessages] = useState([]);
+  const messagesEndRef = useRef(null); // Ref for the messages container
   const [newMessage, setNewMessage] = useState('');
 
   // Fetch initial messages and set up polling
@@ -16,8 +17,12 @@ function Chat({ user, onLogout }) {
           [Query.orderDesc('$createdAt'), Query.limit(50)] // Fetch latest 50
         );
         setMessages(response.documents.reverse()); // Reverse to show oldest first in UI
+
       } catch (error) {
         console.error("Failed to fetch messages:", error);
+      } finally {
+        // Scroll to bottom after initial fetch
+        scrollToBottom();
       }
     };
 
@@ -51,6 +56,7 @@ function Chat({ user, onLogout }) {
                 return mergedMessages;
             });
 
+            // Scrolling will be handled by the separate useEffect watching 'messages'
         } catch (error) {
             console.error("Failed to poll for messages:", error);
         }
@@ -61,6 +67,17 @@ function Chat({ user, onLogout }) {
 
   }, []);
 
+  // Effect to scroll to the bottom whenever messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  // Function to scroll the messages container to the bottom
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
+    }
+  };
   // Note: The subscription useEffect has been removed and replaced by polling.
   // The optimistic update logic in handleSendMessage remains, ensuring immediate feedback.
   // The polling mechanism will fetch messages from other users and eventually confirm
@@ -109,7 +126,7 @@ function Chat({ user, onLogout }) {
     <>
       <h1>Draconic Chatroom</h1>
       <button onClick={onLogout} style={{ position: 'absolute', top: '1em', right: '1em' }}>Logout</button> {/* Basic logout button */}
-      <div className="messages-container">
+      <div className="messages-container" ref={messagesEndRef}> {/* Attach ref here */}
         {messages.map((message) => {
           let ownerDisplay = message.isPending ? (user.name || user.email || "You") : "Unknown Owner"; // Display current user for pending messages
           // Find the update permission to identify the owner
