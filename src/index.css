@@ -1,6 +1,19 @@
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
+
+  /* Define custom font */
+  /* Replace 'DraconicFont' with your font's name */
+  /* Replace the src paths with the actual paths to your font files */
+  /* Add more src lines for different font formats (.woff, .ttf, etc.) */
+  /* Add more @font-face rules for different weights/styles (bold, italic) */
+  @font-face {
+    font-family: 'DraconicFont';
+    src: url('/fonts/DraconicFont-Regular.woff2') format('woff2'),
+         url('/fonts/DraconicFont-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
   font-weight: 400;
 
   color-scheme: light dark;

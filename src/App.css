@@ -37,6 +37,7 @@ h1 { /* This h1 is inside .app-container now */
   padding: 1em;
   display: flex;
   flex-direction: column;
+  font-family: 'DraconicFont', system-ui, Avenir, Helvetica, Arial, sans-serif; /* Apply custom font */
   gap: 0.75em;
 }
 
