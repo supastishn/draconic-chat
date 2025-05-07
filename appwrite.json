@@ -24,7 +24,7 @@
                     "signed": false,
                     "array": false,
                     "filters": []
-                },
+                }
             ],
             "indexes": [],
             "enabled": true,
