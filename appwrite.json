@@ -27,7 +27,7 @@
             ],
             "indexes": [],
             "enabled": true,
-            "permissions": [
+            "$permissions": [
                 "read(\"any\")",
                 "create(\"any\")"
             ]
