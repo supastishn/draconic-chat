@@ -1,3 +1,21 @@
 {
-    "projectId": "draconic-chatroom"
+    "projectId": "draconic-chatroom",
+    "databases": [
+        {
+            "$id": "database",
+            "name": "Database",
+            "enabled": true
+        }
+    ],
+    "collections": [
+        {
+            "$id": "messages",
+            "databaseId": "database",
+            "name": "messages",
+            "documentSecurity": true,
+            "attributes": [],
+            "indexes": [],
+            "enabled": true
+        }
+    ]
 }
