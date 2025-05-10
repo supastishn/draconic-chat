@@ -190,6 +190,7 @@ h1 { /* This h1 is inside .app-container now */
   cursor: pointer;
   line-height: 1; /* Ensure text is centered vertically */
   box-sizing: border-box; /* Include padding and border in element's total width and height */
+  font-family: 'DraconicFont', system-ui, Avenir, Helvetica, Arial, sans-serif; /* Apply custom font to keyboard keys */
 }
 
 .keyboard-key:hover {
