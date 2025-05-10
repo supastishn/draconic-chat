@@ -10,7 +10,7 @@
   /* Add more @font-face rules for different weights/styles (bold, italic) */
   @font-face {
     font-family: 'Draconic';
-    src: url('/fonts/Draconic.ttf') format('truetype');
+    src: url('/Draconic.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
