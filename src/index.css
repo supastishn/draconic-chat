@@ -9,7 +9,7 @@
   /* Add more src lines for different font formats (.woff, .ttf, etc.) */
   /* Add more @font-face rules for different weights/styles (bold, italic) */
   @font-face {
-    font-family: 'DraconicFont';
+    font-family: 'Draconic';
     src: url('/fonts/Draconic.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
@@ -41,7 +41,7 @@ body {
   align-items: center; /* Center vertically */
   min-width: 320px;
   min-height: 100vh;
-  font-family: 'DraconicFont', system-ui, Avenir, Helvetica, Arial, sans-serif; /* Apply custom font globally */
+  font-family: 'Draconic', system-ui, Avenir, Helvetica, Arial, sans-serif; /* Apply custom font globally */
 }
 
 h1 {
