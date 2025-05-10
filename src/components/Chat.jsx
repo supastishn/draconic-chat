@@ -1,11 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { client, databases, ID, Query } from '../appwrite';
 import { DATABASE_ID, COLLECTION_ID_MESSAGES } from '../App'; // Import IDs from App.jsx
+import OnScreenKeyboard from './OnScreenKeyboard'; // Import the new component
 
 function Chat({ user, onLogout }) {
   const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null); // Ref for the messages container
   const [newMessage, setNewMessage] = useState('');
+  const [showKeyboard, setShowKeyboard] = useState(false); // State to toggle keyboard
+  const inputRef = useRef(null); // Ref for the message input field
 
   // Fetch initial messages and set up polling
   useEffect(() => {
@@ -83,6 +86,16 @@ function Chat({ user, onLogout }) {
   // The polling mechanism will fetch messages from other users and eventually confirm
   // the current user's messages if the optimistic update succeeds.
 
+  const handleKeyPressFromKeyboard = (key) => {
+    setNewMessage((prev) => prev + key);
+    if (inputRef.current) {
+      inputRef.current.focus();
+      // Set cursor to the end of the input
+      const end = inputRef.current.value.length;
+      inputRef.current.setSelectionRange(end, end);
+    }
+  };
+
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
@@ -149,10 +162,20 @@ function Chat({ user, onLogout }) {
         })}
       </div>
       <form onSubmit={handleSendMessage} className="message-form">
-        {/* Input and button are already in App.jsx, move them here */}
-        <input type="text" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} placeholder="Type a message..." aria-label="Type a message" />
+        <input
+          ref={inputRef} // Assign ref to the input
+          type="text"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          placeholder="Type a message..."
+          aria-label="Type a message"
+        />
         <button type="submit">Send</button>
       </form>
+      <button onClick={() => setShowKeyboard(!showKeyboard)} className="toggle-keyboard-button">
+        {showKeyboard ? 'Hide' : 'Show'} Keyboard
+      </button>
+      {showKeyboard && <OnScreenKeyboard onKeyPress={handleKeyPressFromKeyboard} />}
     </>
   );
 }

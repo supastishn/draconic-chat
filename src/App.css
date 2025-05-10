@@ -122,3 +122,93 @@ h1 { /* This h1 is inside .app-container now */
 .auth-form button {
   width: 100%;
 }
+
+/* On-screen Keyboard Styles */
+.onscreen-keyboard {
+  background-color: #3c3c3c; /* Dark background for the keyboard area */
+  padding: 10px;
+  border-top: 1px solid #444;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center rows */
+  margin-top: 10px;
+  border-radius: 0 0 8px 8px; /* Match app-container bottom radius if it's the last element */
+}
+
+.keyboard-layout-switcher {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 5px;
+}
+
+.keyboard-layout-switcher button {
+  padding: 0.5em 1em;
+  font-size: 0.9em;
+  background-color: #2a2a2a;
+  border: 1px solid #555;
+}
+
+.keyboard-layout-switcher button:disabled {
+  background-color: #646cff;
+  color: white;
+  border-color: #646cff;
+}
+
+
+.keyboard-row {
+  display: flex;
+  justify-content: center; /* Center keys within a row */
+  margin-bottom: 5px;
+  gap: 5px; /* Gap between keys */
+}
+
+.keyboard-key {
+  padding: 0; /* Remove padding to rely on flex centering and fixed size */
+  min-width: 35px; /* Minimum width for keys */
+  width: 35px; /* Fixed width for keys */
+  height: 35px; /* Fixed height for keys */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #4f4f4f; /* Slightly lighter than form input for contrast */
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  line-height: 1; /* Ensure text is centered vertically */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+.keyboard-key:hover {
+  background-color: #666;
+  border-color: #777;
+}
+
+.keyboard-key:active {
+  background-color: #5a5a5a;
+}
+
+.keyboard-key.empty {
+  background-color: #3a3a3a; /* Darker for empty keys */
+  border-color: #444;
+  cursor: default;
+  color: #3a3a3a; /* Make text same as background to hide it if any */
+}
+
+.keyboard-key.empty:hover {
+  background-color: #3a3a3a; /* No hover effect for empty keys */
+  border-color: #444;
+}
+
+.toggle-keyboard-button {
+  display: block;
+  margin: 10px auto 0; /* Center the button, remove bottom margin if keyboard is shown directly after */
+  padding: 0.6em 1.2em;
+  background-color: #1a1a1a; /* Match other buttons */
+  border: 1px solid transparent; /* Match other buttons */
+}
+
+.toggle-keyboard-button:hover {
+  border-color: #646cff; /* Match other buttons */
+}
