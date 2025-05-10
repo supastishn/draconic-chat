@@ -1,5 +1,5 @@
 #root {
-  /* Centering the app-container within the root */
+  /* Centering the page-layout within the root */
   display: flex;
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
@@ -19,6 +19,15 @@
   text-align: left; /* Keep text alignment within the container */
   color: rgba(255, 255, 255, 0.87); /* Default text color */
   background-color: #2f2f2f;
+}
+
+.page-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center app-container and keyboard horizontally */
+  justify-content: center; /* Center content vertically if space allows */
+  width: 100%;
+  /* padding: 1rem; */ /* Optional: add some padding around the whole page content */
 }
 
 h1 { /* This h1 is inside .app-container now */
@@ -131,8 +140,10 @@ h1 { /* This h1 is inside .app-container now */
   display: flex;
   flex-direction: column;
   align-items: center; /* Center rows */
-  margin-top: 10px;
-  border-radius: 0 0 8px 8px; /* Match app-container bottom radius if it's the last element */
+  margin-top: 10px; /* Space between app-container and keyboard */
+  border-radius: 8px; /* Consistent rounding for a standalone block */
+  width: 80vw; /* Match app-container width */
+  box-sizing: border-box; /* Include padding in width calculation */
 }
 
 .keyboard-section {

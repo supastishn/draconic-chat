@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { client, databases, ID, Query } from '../appwrite';
 import { DATABASE_ID, COLLECTION_ID_MESSAGES } from '../App'; // Import IDs from App.jsx
-import OnScreenKeyboard from './OnScreenKeyboard'; // Import the new component
+// OnScreenKeyboard is now imported and used in App.jsx
 
-function Chat({ user, onLogout }) {
+function Chat({ user, onLogout, newMessage, setNewMessage, chatInputRef }) { // Receive new props
   const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null); // Ref for the messages container
-  const [newMessage, setNewMessage] = useState('');
-  const inputRef = useRef(null); // Ref for the message input field
+  // newMessage and setNewMessage are now props
+  // inputRef is now chatInputRef (prop)
 
   // Fetch initial messages and set up polling
   useEffect(() => {
@@ -85,15 +85,7 @@ function Chat({ user, onLogout }) {
   // The polling mechanism will fetch messages from other users and eventually confirm
   // the current user's messages if the optimistic update succeeds.
 
-  const handleKeyPressFromKeyboard = (key) => {
-    setNewMessage((prev) => prev + key);
-    if (inputRef.current) {
-      inputRef.current.focus();
-      // Set cursor to the end of the input
-      const end = inputRef.current.value.length;
-      inputRef.current.setSelectionRange(end, end);
-    }
-  };
+  // handleKeyPressFromKeyboard is now in App.jsx
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -162,16 +154,16 @@ function Chat({ user, onLogout }) {
       </div>
       <form onSubmit={handleSendMessage} className="message-form">
         <input
-          ref={inputRef} // Assign ref to the input
+          ref={chatInputRef} // Use the passed ref
           type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
+          value={newMessage} // Use passed state
+          onChange={(e) => setNewMessage(e.target.value)} // Use passed setter
           placeholder="Type a message..."
           aria-label="Type a message"
         />
         <button type="submit">Send</button>
       </form>
-      <OnScreenKeyboard onKeyPress={handleKeyPressFromKeyboard} />
+      {/* OnScreenKeyboard is now rendered in App.jsx */}
     </>
   );
 }
