@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 // Helper to check if a char (lowercase) is A-M
@@ -26,35 +25,38 @@ const layouts = {
   ]
 };
 
-function OnScreenKeyboard({ onKeyPress }) {
-  const [currentLayout, setCurrentLayout] = useState('lowercase'); // 'lowercase', 'uppercaseAM', 'symbols'
+// Titles for each layout section
+const layoutTitles = {
+  lowercase: 'Lowercase (a-z)',
+  uppercaseAM: 'Uppercase (A-M)',
+  symbols: 'Symbols',
+};
 
+function OnScreenKeyboard({ onKeyPress }) {
   const handleKeyClick = (key) => {
     if (key) { // Only if key is not empty (for uppercaseAM layout)
       onKeyPress(key);
     }
   };
 
-  const activeLayout = layouts[currentLayout];
-
   return (
     <div className="onscreen-keyboard">
-      <div className="keyboard-layout-switcher">
-        <button onClick={() => setCurrentLayout('lowercase')} disabled={currentLayout === 'lowercase'}>a-z</button>
-        <button onClick={() => setCurrentLayout('uppercaseAM')} disabled={currentLayout === 'uppercaseAM'}>A-M</button>
-        <button onClick={() => setCurrentLayout('symbols')} disabled={currentLayout === 'symbols'}>+</button>
-      </div>
-      {activeLayout.map((row, rowIndex) => (
-        <div key={rowIndex} className="keyboard-row">
-          {row.map((key, keyIndex) => (
-            <button
-              key={`${currentLayout}-${rowIndex}-${keyIndex}`} // Ensure key is unique across layout changes
-              className={`keyboard-key ${!key ? 'empty' : ''}`}
-              onClick={() => handleKeyClick(key)}
-              disabled={!key}
-            >
-              {key || ''}
-            </button>
+      {Object.entries(layouts).map(([layoutName, layoutRows]) => (
+        <div key={layoutName} className="keyboard-section">
+          <h4 className="keyboard-section-title">{layoutTitles[layoutName] || layoutName}</h4>
+          {layoutRows.map((row, rowIndex) => (
+            <div key={`${layoutName}-row-${rowIndex}`} className="keyboard-row">
+              {row.map((keyChar, keyIndex) => (
+                <button
+                  key={`${layoutName}-key-${rowIndex}-${keyIndex}-${keyChar || 'empty'}`}
+                  className={`keyboard-key ${!keyChar ? 'empty' : ''}`}
+                  onClick={() => handleKeyClick(keyChar)}
+                  disabled={!keyChar}
+                >
+                  {keyChar || ''}
+                </button>
+              ))}
+            </div>
           ))}
         </div>
       ))}
