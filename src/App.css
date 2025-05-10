@@ -201,15 +201,3 @@ h1 { /* This h1 is inside .app-container now */
   background-color: #3a3a3a; /* No hover effect for empty keys */
   border-color: #444;
 }
-
-.toggle-keyboard-button {
-  display: block;
-  margin: 10px auto 0; /* Center the button, remove bottom margin if keyboard is shown directly after */
-  padding: 0.6em 1.2em;
-  background-color: #1a1a1a; /* Match other buttons */
-  border: 1px solid transparent; /* Match other buttons */
-}
-
-.toggle-keyboard-button:hover {
-  border-color: #646cff; /* Match other buttons */
-}

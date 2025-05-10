@@ -7,7 +7,6 @@ function Chat({ user, onLogout }) {
   const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null); // Ref for the messages container
   const [newMessage, setNewMessage] = useState('');
-  const [showKeyboard, setShowKeyboard] = useState(false); // State to toggle keyboard
   const inputRef = useRef(null); // Ref for the message input field
 
   // Fetch initial messages and set up polling
@@ -172,10 +171,7 @@ function Chat({ user, onLogout }) {
         />
         <button type="submit">Send</button>
       </form>
-      <button onClick={() => setShowKeyboard(!showKeyboard)} className="toggle-keyboard-button">
-        {showKeyboard ? 'Hide' : 'Show'} Keyboard
-      </button>
-      {showKeyboard && <OnScreenKeyboard onKeyPress={handleKeyPressFromKeyboard} />}
+      <OnScreenKeyboard onKeyPress={handleKeyPressFromKeyboard} />
     </>
   );
 }
