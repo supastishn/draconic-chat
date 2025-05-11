@@ -38,6 +38,7 @@ h1 { /* This h1 is inside .app-container now */
   color: rgba(255, 255, 255, 0.87);
   font-size: 1.5em;
   border-bottom: 1px solid #444;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; /* Use system UI font */
 }
 
 .messages-container {
@@ -165,6 +166,7 @@ h1 { /* This h1 is inside .app-container now */
   margin-bottom: 8px;
   text-align: center;
   width: 100%;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; /* Use system UI font */
 }
 
 .keyboard-row {
