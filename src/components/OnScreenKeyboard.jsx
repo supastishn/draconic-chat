@@ -1,11 +1,5 @@
 import PropTypes from 'prop-types';
 
-// Helper to check if a char (lowercase) is A-M
-const isCharAM = (char) => {
-  const c = char.toLowerCase();
-  return c >= 'a' && c <= 'm';
-};
-
 // Define keyboard layouts
 const layouts = {
   lowercase: [
@@ -13,10 +7,10 @@ const layouts = {
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
     ['z', 'x', 'c', 'v', 'b', 'n', 'm']
   ],
-  uppercaseAM: [
-    ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'].map(k => isCharAM(k) ? k.toUpperCase() : ''),
-    ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'].map(k => isCharAM(k) ? k.toUpperCase() : ''),
-    ['z', 'x', 'c', 'v', 'b', 'n', 'm'].map(k => isCharAM(k) ? k.toUpperCase() : '')
+  uppercase: [ // Changed from uppercaseAM
+    ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+    ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
   ],
   symbols: [
     ['+']
@@ -28,13 +22,13 @@ const layouts = {
 // Titles for each layout section
 const layoutTitles = {
   lowercase: 'Lowercase (a-z)',
-  uppercaseAM: 'Uppercase (A-M)',
+  uppercase: 'Uppercase (A-Z)', // Changed from uppercaseAM
   symbols: 'Symbols',
 };
 
 function OnScreenKeyboard({ onKeyPress }) {
   const handleKeyClick = (key) => {
-    if (key) { // Only if key is not empty (for uppercaseAM layout)
+    if (key) { // Key could be empty string if layout defined it, but our layouts are full chars
       onKeyPress(key);
     }
   };

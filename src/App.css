@@ -222,6 +222,7 @@ h1 { /* This h1 is inside .app-container now */
   text-align: center;
   font-size: 0.8em;
   color: #aaa; /* Light grey text for footer */
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; /* Use system UI font */
   background-color: #242424; /* Match root background or choose a subtle one */
   border-top: 1px solid #444; /* Optional: separator line */
   border-radius: 0 0 8px 8px; /* Optional: round bottom corners if keyboard is rounded */
