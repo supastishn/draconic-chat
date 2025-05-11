@@ -242,7 +242,6 @@ function Chat({ user, onLogout, newMessage, setNewMessage, chatInputRef }) { // 
           type="text"
           value={newMessage} // Use passed state
           onChange={(e) => setNewMessage(e.target.value)} // Use passed setter
-          placeholder="Type a message..."
           aria-label="Type a message"
         />
         <button type="submit">Send</button>
