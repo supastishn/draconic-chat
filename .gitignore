@@ -22,4 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Aider files
 .aider*
+
+# Environment files
+.env
+migrators/.env
