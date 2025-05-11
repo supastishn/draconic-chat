@@ -89,6 +89,8 @@ function App() {
       <footer className="attribution-footer">
         <p>Draconic Language is made by human1011</p>
         <p>Draconic Font is made by _executie on Discord</p>
+        <p><a href="https://supastishn.github.io" target="_blank" rel="noopener noreferrer">See other fun stuff</a></p>
+        <p><a href="https://github.com/supastishn/draconic-chat" target="_blank" rel="noopener noreferrer">See the source code</a></p>
       </footer>
     </div>
   )
