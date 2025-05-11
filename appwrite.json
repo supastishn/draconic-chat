@@ -32,5 +32,62 @@
                 "read(\"any\")", "create(\"users\")"
             ]
         }
+    ],
+    "collections": [
+        {
+            "$id": "messages",
+            "databaseId": "database",
+            "name": "messages",
+            "documentSecurity": false,
+            "documentSecurity": true,
+            "attributes": [
+                {
+                    "$id": "text",
+                    "key": "text",
+                    "type": "string",
+                    "size": 65535,
+                    "required": true,
+                    "signed": false,
+                    "array": false,
+                    "filters": []
+                }
+            ],
+            "indexes": [],
+            "enabled": true,
+            "$permissions": [
+                "read(\"any\")", "create(\"users\")"
+            ]
+        },
+        {
+            "$id": "accounts",
+            "databaseId": "database",
+            "name": "accounts",
+            "documentSecurity": true,
+            "attributes": [
+                {
+                    "$id": "username",
+                    "key": "username",
+                    "type": "string",
+                    "size": 255,
+                    "required": true,
+                    "signed": false,
+                    "array": false,
+                    "filters": []
+                }
+            ],
+            "indexes": [
+                {
+                    "$id": "idx_username",
+                    "type": "key",
+                    "attributes": ["username"],
+                    "orders": ["ASC"]
+                }
+            ],
+            "enabled": true,
+            "$permissions": [
+                "read(\"any\")",
+                "create(\"users\")"
+            ]
+        }
     ]
 }

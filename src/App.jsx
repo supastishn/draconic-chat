@@ -9,12 +9,13 @@ import OnScreenKeyboard from './components/OnScreenKeyboard'; // Import OnScreen
 // IMPORTANT: Ensure these match your Appwrite setup (appwrite.json)
 const DATABASE_ID = 'database'; // Matches appwrite.json database $id
 const COLLECTION_ID_MESSAGES = 'messages'; // Matches appwrite.json collection $id
+const COLLECTION_ID_ACCOUNTS = 'accounts'; // New collection for user profiles
 // Ensure your Appwrite collection has an attribute 'text' (String) for message content.
 // And appropriate permissions (e.g., 'Any' or 'Users' can Create and Read documents).
 // Also, ensure YOUR_APPWRITE_ENDPOINT is set in src/appwrite.js
 
 // Pass these IDs down to components that need them
-export { DATABASE_ID, COLLECTION_ID_MESSAGES };
+export { DATABASE_ID, COLLECTION_ID_MESSAGES, COLLECTION_ID_ACCOUNTS };
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);

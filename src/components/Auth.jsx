@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { account } from '../appwrite';
+import { account, databases, ID } from '../appwrite'; // Import databases and ID
+import { DATABASE_ID, COLLECTION_ID_ACCOUNTS } from '../App'; // Import Appwrite constants
 
 function Auth({ onLogin }) {
   const [isRegistering, setIsRegistering] = useState(false);
@@ -15,10 +16,29 @@ function Auth({ onLogin }) {
     try {
       if (isRegistering) {
         // Register user
-        await account.create('unique()', email, password, name);
+        const userAuth = await account.create(ID.unique(), email, password, name);
         // After successful registration, automatically log them in
         await account.createEmailPasswordSession(email, password);
-        console.log('Registration successful, logged in.');
+        console.log('Registration successful, user created, logged in.');
+
+        // Create user profile in 'accounts' collection
+        try {
+          await databases.createDocument(
+            DATABASE_ID,
+            COLLECTION_ID_ACCOUNTS,
+            userAuth.$id, // Use the new user's ID as the document ID
+            { username: name },
+            [
+              `read("any")`, // Anyone can read the profile
+              `update("user:${userAuth.$id}")`, // Only the user can update
+              `delete("user:${userAuth.$id}")`  // Only the user can delete
+            ]
+          );
+          console.log('User profile created in accounts collection.');
+        } catch (profileError) {
+          console.error('Failed to create user profile:', profileError);
+          // Optionally, handle profile creation failure (e.g., inform user, attempt cleanup)
+        }
       } else {
         // Login user
         await account.createEmailPasswordSession(email, password);
