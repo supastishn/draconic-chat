@@ -78,6 +78,7 @@
             "indexes": [
                 {
                     "$id": "idx_username",
+                    "key": "idx_username",
                     "type": "key",
                     "attributes": ["username"],
                     "orders": ["ASC"]
