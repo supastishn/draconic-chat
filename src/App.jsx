@@ -79,6 +79,10 @@ function App() {
       {currentUser && (
         <OnScreenKeyboard onKeyPress={handleKeyPressFromKeyboard} />
       )}
+      <footer className="attribution-footer">
+        <p>Draconic Language is made by human1011</p>
+        <p>Draconic Font is made by _executie on Discord</p>
+      </footer>
     </div>
   )
 }

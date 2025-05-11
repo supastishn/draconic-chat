@@ -213,3 +213,21 @@ h1 { /* This h1 is inside .app-container now */
   background-color: #3a3a3a; /* No hover effect for empty keys */
   border-color: #444;
 }
+
+/* Attribution Footer Styles */
+.attribution-footer {
+  width: 80vw; /* Match app-container and keyboard width */
+  padding: 10px;
+  margin-top: 15px; /* Space above the footer */
+  text-align: center;
+  font-size: 0.8em;
+  color: #aaa; /* Light grey text for footer */
+  background-color: #242424; /* Match root background or choose a subtle one */
+  border-top: 1px solid #444; /* Optional: separator line */
+  border-radius: 0 0 8px 8px; /* Optional: round bottom corners if keyboard is rounded */
+  box-sizing: border-box;
+}
+
+.attribution-footer p {
+  margin: 0.25em 0; /* Small margin between lines */
+}
