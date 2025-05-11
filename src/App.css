@@ -101,6 +101,28 @@ h1 { /* This h1 is inside .app-container now */
   color: #ffffff; /* Make send button text white */
 }
 
+/* Logout Button Styles */
+.logout-button {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  padding: 0.6em 1.2em; /* Match default button padding or adjust */
+  color: rgba(255, 255, 255, 0.87); /* Light text color, consistent with theme */
+  background-color: #1a1a1a; /* Match default button background or adjust */
+  border: 1px solid transparent; /* Match default button border */
+  border-radius: 8px; /* Match default button border-radius */
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; /* Use system UI font */
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+.logout-button:hover {
+  border-color: #646cff; /* Match default button hover */
+  color: #ffffff; /* Brighter white on hover */
+}
+
+
 /* Styles for Auth component */
 .auth-container {
   display: flex;

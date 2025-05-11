@@ -64,7 +64,13 @@ function App() {
         {currentUser ? (
           <Chat
             user={currentUser}
-            onLogout={() => {
+            onLogout={async () => {
+              try {
+                await account.deleteSession('current');
+                console.log('Session deleted');
+              } catch (error) {
+                console.error('Failed to delete session:', error);
+              }
               setCurrentUser(null);
               setNewMessage(''); // Clear message input on logout
             }}

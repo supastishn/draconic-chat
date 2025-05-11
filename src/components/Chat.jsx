@@ -129,7 +129,7 @@ function Chat({ user, onLogout, newMessage, setNewMessage, chatInputRef }) { // 
   return (
     <>
       <h1>Draconic Chatroom</h1>
-      <button onClick={onLogout} style={{ position: 'absolute', top: '1em', right: '1em' }}>Logout</button> {/* Basic logout button */}
+      <button onClick={onLogout} className="logout-button">Logout</button>
       <div className="messages-container" ref={messagesEndRef}> {/* Attach ref here */}
         {messages.map((message) => {
           let ownerDisplay = message.isPending ? (user.name || user.email || "You") : "Unknown Owner"; // Display current user for pending messages
