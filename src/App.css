@@ -111,6 +111,12 @@ h1 { /* This h1 is inside .app-container now */
   gap: 1.5em;
   width: 100%; /* Take full width of app-container */
   height: 100%; /* Take full height of app-container */
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; /* Use system UI font for all auth text */
+}
+
+.auth-container h2 {
+  font-family: inherit; /* Ensure h2 uses the system-ui font from auth-container */
+  /* Color is inherited from .app-container, which is light for dark mode */
 }
 
 .auth-form {
@@ -127,10 +133,30 @@ h1 { /* This h1 is inside .app-container now */
   border-radius: 4px;
   background-color: #333;
   color: rgba(255, 255, 255, 0.87);
+  font-family: inherit; /* Inherit system-ui font from .auth-container */
 }
 
-.auth-form button {
+.auth-form button[type="submit"] { /* Style specifically the submit button */
   width: 100%;
+  font-family: inherit; /* Inherit system-ui font */
+  color: #ffffff; /* Ensure submit button text is white */
+}
+
+/* Style for the "Need an account? Register" / "Already have an account? Login" button */
+.auth-container .link-button {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.87); /* Light text color for dark mode */
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: inherit; /* Inherit system-ui font */
+  padding: 0; /* Remove default button padding */
+  font-size: 0.9em; /* Optional: adjust size */
+}
+
+.auth-container .link-button:hover {
+  color: #ffffff; /* Slightly brighter on hover */
+  border-color: transparent; /* Ensure no border appears on hover from global button styles */
 }
 
 /* On-screen Keyboard Styles */

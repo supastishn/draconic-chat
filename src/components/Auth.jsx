@@ -68,9 +68,8 @@ function Auth({ onLogin }) {
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <button
-        className="link-button" // Add a class for styling if needed
+        className="link-button"
         onClick={() => setIsRegistering(!isRegistering)}
-        style={{ background: 'none', border: 'none', color: '#646cff', cursor: 'pointer', textDecoration: 'underline' }}
       >
         {isRegistering ? 'Already have an account? Login' : 'Need an account? Register'}
       </button>
