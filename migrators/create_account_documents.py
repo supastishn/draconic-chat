@@ -9,7 +9,7 @@ from appwrite.id import ID
 from appwrite.query import Query
 from appwrite.permission import Permission
 from appwrite.role import Role
-from appwrite import AppwriteException # Changed import for AppwriteException
+# AppwriteException import removed
 
 # Load environment variables from .env file
 load_dotenv()
@@ -67,11 +67,19 @@ def main():
         
         print(f"\nTotal users fetched: {len(all_users)}")
 
-    except AppwriteException as e:
-        print(f"Error fetching users: {e}")
+    except Exception as e: # Catching generic Exception
+        message = getattr(e, 'message', str(e))
+        code = getattr(e, 'code', None)
+        if code is not None: # Check if it seems like an AppwriteException
+            print(f"Error fetching users: {message} (Code: {code})")
+        else:
+            print(f"Error fetching users: {message}")
         sys.exit(1)
-    except Exception as e:
-        print(f"An unexpected error occurred while fetching users: {e}")
+    # Removed the more specific AppwriteException catch for fetching users,
+    # as the generic Exception catch above will handle it.
+    # If you need to distinguish other non-Appwrite exceptions, add more specific catches before the generic one.
+    except Exception as e: # This remains as a fallback for truly unexpected errors
+        print(f"An unexpected error occurred during user fetching: {e}")
         sys.exit(1)
 
 
@@ -98,11 +106,26 @@ def main():
                 print(f"Account document for user '{username}' (ID: {user_id}) already exists. Skipping.")
                 skipped_count += 1
                 continue
-            except AppwriteException as e:
-                if e.code == 404: # Document not found, proceed to create
+            except Exception as e: # Catching generic Exception
+                # Check if it's an Appwrite-like 404 error
+                is_appwrite_404 = False
+                if hasattr(e, 'code') and getattr(e, 'code') == 404:
+                    is_appwrite_404 = True
+                
+                if is_appwrite_404: # Document not found, proceed to create
                     pass
-                else: # Other Appwrite error during get_document
-                    raise e 
+                else: # Other error during get_document
+                    message = getattr(e, 'message', str(e))
+                    code = getattr(e, 'code', None)
+                    type_ = getattr(e, 'type', None)
+                    print(f"  Error checking for existing document for user '{username}' (ID: {user_id}):")
+                    if code is not None and type_ is not None:
+                        print(f"    Appwrite-like Error: {message} (Code: {code}, Type: {type_})")
+                    else:
+                        print(f"    Error: {message}")
+                    print(f"  Skipping user {user_id} due to this error.")
+                    error_count += 1
+                    continue # Skip to the next user
 
             # Create document
             document_data = {'username': username}
@@ -122,11 +145,15 @@ def main():
             print(f"Successfully created account document for user '{username}' (ID: {user_id}).")
             created_count += 1
 
-        except AppwriteException as e:
-            print(f"Appwrite Error creating document for user '{username}' (ID: {user_id}): {e.message} (Code: {e.code}, Type: {e.type})")
-            error_count += 1
-        except Exception as e:
-            print(f"Unexpected error creating document for user '{username}' (ID: {user_id}): {e}")
+        except Exception as e: # Catching generic Exception
+            message = getattr(e, 'message', str(e))
+            code = getattr(e, 'code', None)
+            type_ = getattr(e, 'type', None)
+            
+            if code is not None and type_ is not None: # Likely an AppwriteException
+                print(f"Appwrite-like Error creating document for user '{username}' (ID: {user_id}): {message} (Code: {code}, Type: {type_})")
+            else: # Generic exception
+                print(f"Error creating document for user '{username}' (ID: {user_id}): {message}")
             error_count += 1
             
     print("\n--- Migration Summary ---")
