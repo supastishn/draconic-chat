@@ -1,19 +1,19 @@
+/* Define custom font */
+/* Replace 'DraconicFont' with your font's name */
+/* Replace the src paths with the actual paths to your font files */
+/* Add more src lines for different font formats (.woff, .ttf, etc.) */
+/* Add more @font-face rules for different weights/styles (bold, italic) */
+@font-face {
+  font-family: 'Draconic';
+  src: url('/Draconicfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   /* font-family is now set on the body for a more global default */
   line-height: 1.5;
   font-weight: 400;
-
-  /* Define custom font */
-  /* Replace 'DraconicFont' with your font's name */
-  /* Replace the src paths with the actual paths to your font files */
-  /* Add more src lines for different font formats (.woff, .ttf, etc.) */
-  /* Add more @font-face rules for different weights/styles (bold, italic) */
-  @font-face {
-    font-family: 'Draconic';
-    src: url('/Draconicfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
