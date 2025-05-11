@@ -76,6 +76,7 @@ h1 { /* This h1 is inside .app-container now */
   color: #aaa;
   display: block;
   text-align: right;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; /* Use system UI font */
 }
 
 .message-form {
