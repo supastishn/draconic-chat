@@ -9,7 +9,7 @@ from appwrite.id import ID
 from appwrite.query import Query
 from appwrite.permission import Permission
 from appwrite.role import Role
-from appwrite.exceptions import AppwriteException
+from appwrite import AppwriteException # Changed import for AppwriteException
 
 # Load environment variables from .env file
 load_dotenv()
