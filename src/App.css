@@ -100,6 +100,7 @@ h1 { /* This h1 is inside .app-container now */
 .message-form button {
   padding: 0.8em 1.5em;
   color: #ffffff; /* Make send button text white */
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; /* Use system UI font */
 }
 
 /* Logout Button Styles */
