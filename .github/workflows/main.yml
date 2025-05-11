@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - master # Add master branch here
   workflow_dispatch: # Allows manual triggering
 
 jobs:
@@ -34,7 +35,7 @@ jobs:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' # Add master branch condition
 
     steps:
       - name: Download artifact
