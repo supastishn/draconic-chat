@@ -68,7 +68,7 @@ h1 { /* This h1 is inside .app-container now */
 .message-owner {
   font-weight: bold;
   margin: 0 0 0.25em 0;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; /* Use system UI font */
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif !important; /* Use system UI font */
 }
 
 .message-timestamp {
