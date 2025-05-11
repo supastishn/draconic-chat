@@ -1,30 +1,30 @@
 import PropTypes from 'prop-types';
 
-// Define keyboard layouts
+// Define keyboard layouts based on provided mappings
+// Keys display the Latin character; pressing them inputs that same Latin character.
+// The 'Draconic' font handles the visual transformation in the input/chat.
+// '' represents a blank key. Unlisted keys are removed.
+
 const layouts = {
   lowercase: [
-    ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+    ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', ''], // p is blank
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
     ['z', 'x', 'c', 'v', 'b', 'n', 'm']
   ],
-  uppercase: [ // Changed from uppercaseAM
-    ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
-    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-    ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+  uppercase: [
+    ['Q', '', 'E', 'R', 'T', /* Y removed */ 'U', 'I', 'O', ''], // W, P are blank; Y is not mapped
+    ['A', 'S', '', 'F', '', 'H', '', 'K', 'L'], // D, G, J are blank
+    [/* Z removed */ 'X', '', '', '', '', ''] // C, V, B, N, M are blank; Z is not mapped
   ],
   symbols: [
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-    ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')'],
-    ['-', '_', '=', '+', '[', ']', '{', '}', '\\', '|'],
-    [';', ':', '\'', '"', ',', '.', '<', '>', '/', '?'],
-    ['`', '~']
+    [',', '.']
   ]
 };
 
 // Titles for each layout section
 const layoutTitles = {
-  lowercase: 'Lowercase (a-z)',
-  uppercase: 'Uppercase (A-Z)', // Changed from uppercaseAM
+  lowercase: 'Lowercase',
+  uppercase: 'Uppercase',
   symbols: 'Symbols',
 };
 
