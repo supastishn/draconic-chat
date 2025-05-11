@@ -6,26 +6,26 @@ import PropTypes from 'prop-types';
 // '' represents a blank key. Unlisted keys are removed.
 
 const layouts = {
-  nonShift: [
+  qwerty: [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', ''], // p is blank
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
     ['z', 'x', 'c', 'v', 'b', 'n', 'm']
   ],
-  shift: [
+  shiftQwerty: [
     ['Q', '', 'E', 'R', 'T', /* Y removed */ 'U', 'I', 'O', ''], // W, P are blank; Y is not mapped
     ['A', 'S', '', 'F', '', 'H', '', 'K', 'L'], // D, G, J are blank
     [/* Z removed */ 'X', '', '', '', '', ''] // C, V, B, N, M are blank; Z is not mapped
   ],
-  symbols: [
+  nonQwerty: [
     [',', '.']
   ]
 };
 
 // Titles for each layout section
 const layoutTitles = {
-  nonShift: 'Non-shift',
-  shift: 'Shift',
-  symbols: 'Symbols',
+  qwerty: 'qwerty',
+  shiftQwerty: 'Shift + qwerty',
+  nonQwerty: 'non-qwerty',
 };
 
 function OnScreenKeyboard({ onKeyPress }) {
